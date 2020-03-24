@@ -65,6 +65,7 @@ let data = {
 };
 
 app.get("/api", (req, res) => {
+  console.log("api_biasa called");
   res.status(200).json(data);
 });
 
@@ -107,35 +108,6 @@ app.get("/get-token/:username", (req, res) => {
 
   res.status(200).send(token);
 });
-
-app.post("/book", (req, res) => {
-  const book = req.body;
-
-  // Output the book to the console for debugging
-  console.log(book);
-  books.push(book);
-
-  res.send("Book is added to the database");
-});
-
-app.delete("/book/:isbn", (req, res) => {
-  // Reading isbn from the URL
-  const isbn = req.params.isbn;
-
-  // Remove item from the books array
-  books = books.filter(i => {
-    if (i.isbn !== isbn) {
-      return true;
-    }
-    return false;
-  });
-
-  res.send("Book is deleted");
-});
-
-function generateAccessToken(username) {
-  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "3600s" });
-}
 
 app.listen(port, () =>
   console.log(`Hello world app listening on port ${port}!`)
