@@ -65,6 +65,11 @@ let data = {
 };
 
 app.get("/api", (req, res) => {
+  res.status(200).json(data);
+});
+
+app.get("/api_ribet", (req, res) => {
+  console.log("api_ribet called");
   // cek dia ngasih header auth sama username ngga
   if (req.headers.authorization && req.query.username) {
     const authHeader = req.headers.authorization;
