@@ -13,9 +13,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-let data = {
-  data: "TEST_DATA"
-};
+let data = require("./data/actor.json");
 
 app.get("/api", (req, res) => {
   console.log("api_biasa called");
@@ -30,7 +28,7 @@ app.get("/api_ribet", (req, res) => {
     const token = authHeader.split(" ")[1];
     const username = req.query.username;
 
-    jwt.verify(token, process.env.TOKEN_SECRET, function(err, decoded) {
+    jwt.verify(token, process.env.TOKEN_SECRET, function (err, decoded) {
       if (!err) {
         // cek auth bener apa salah
         if (decoded.username == username) {
@@ -57,7 +55,7 @@ app.post("/api_ribet", (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    jwt.verify(token, process.env.TOKEN_SECRET, function(err, decoded) {
+    jwt.verify(token, process.env.TOKEN_SECRET, function (err, decoded) {
       if (!err) {
         // cek auth bener apa salah
         if (decoded.username == username && decoded.password == password) {
@@ -83,7 +81,7 @@ app.post("/get-token", (req, res) => {
   const token = jwt.sign(
     {
       username: username,
-      password: password
+      password: password,
     },
     process.env.TOKEN_SECRET,
     { expiresIn: "12h" }
